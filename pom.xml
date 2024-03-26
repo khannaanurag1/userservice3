@@ -86,11 +86,21 @@
         </dependency>
 
         <!--CLASS 26 EUREKA SERVER -->
+        <!-- naman class - https://www.scaler.com/instructor/meetings/i/revision-of-backtracking-tries-and-strings-3/ -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
             <version>4.1.0</version>
+        </dependency>
+
+        <!--CLASS 27 KAFKA -->
+        <!-- naman class - https://www.scaler.com/instructor/meetings/i/backend-32-6/ -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>3.1.3</version>
         </dependency>
 
     </dependencies>

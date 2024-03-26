@@ -1,9 +1,14 @@
 package org.example.userservice3.Services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import org.antlr.v4.runtime.misc.Pair;
+import org.example.userservice3.Clients.KafkaProducerClient;
+import org.example.userservice3.Dtos.SendEmailMessageDto;
+import org.example.userservice3.Dtos.UserDto;
 import org.example.userservice3.Models.Session;
 import org.example.userservice3.Models.SessionStatus;
 import org.example.userservice3.Models.User;
@@ -38,12 +43,33 @@ public class AuthService2 {
     @Autowired
     private SecretKey secretKey;
 
+    @Autowired
+    private KafkaProducerClient kafkaProducerClient;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     public User signUp(String email, String password) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(bCryptPasswordEncoder.encode(password));
         User savedUser = userRepository.save(user);
+
+        // IN KAFKA INTEGRATION , CLASS 27
+        UserDto userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+
+        try {
+            //kafkaProducerClient.sendMessage("signUp",objectMapper.writeValueAsString(userDto));
+            SendEmailMessageDto sendEmailMessageDto = new SendEmailMessageDto();
+            sendEmailMessageDto.setTo(email);
+            sendEmailMessageDto.setBody("Thanks for creating an account, We look forward to you growing.");
+            sendEmailMessageDto.setSubject("Welcome to ");
+            kafkaProducerClient.sendMessage("sendEmail",objectMapper.writeValueAsString(sendEmailMessageDto));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return savedUser;
     }
 

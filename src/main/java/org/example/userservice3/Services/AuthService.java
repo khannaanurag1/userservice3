@@ -63,7 +63,7 @@ public class AuthService {
 
         //DEMO - 1
         String message = "{\n" +
-        "   \"email\": \"anurag@scaler.com\",\n" +
+        "   \"email\": \"anurag@gmail.com\",\n" +
         "   \"roles\": [\n" +
         "      \"instructor\",\n" +
         "      \"buddy\"\n" +
